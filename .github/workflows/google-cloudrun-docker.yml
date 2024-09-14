@@ -28,12 +28,13 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: 'github-actions@spry-sentry-430715-q8.iam.gserviceaccount.com'
 
       - name: 'Docker Auth'
         uses: 'docker/login-action@v3'
         with:
           username: 'oauth2accesstoken'
-          password: '${{ steps.auth.outputs.access_token }}'
+          password: '${{ steps.auth.outputs.token }}'
           registry: 'us-central1-docker.pkg.dev'
 
       - name: 'Build and Push Container'
