@@ -6,8 +6,8 @@ WORKDIR /app
 
 # Copia os arquivos necessários para a pasta de trabalho
 COPY requirements.txt .
-COPY estrategias.csv .
-COPY main.py .
+COPY app/estrategias.csv .
+COPY app/main.py .
 
 # Instala as dependências da aplicação
 RUN pip install --no-cache-dir -r requirements.txt
