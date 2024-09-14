@@ -32,10 +32,6 @@ jobs:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: 'github-actions@spry-sentry-430715-q8.iam.gserviceaccount.com'
 
-      # Verifique se o token está sendo gerado
-      - name: 'Exibir Token de Autenticação'
-        run: echo "Token: ${{ steps.auth.outputs.access_token }}"
-
       - name: 'Docker Auth'
         uses: 'docker/login-action@v2'
         with:
