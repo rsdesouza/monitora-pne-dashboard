@@ -3,7 +3,7 @@ name: 'Build and Deploy to Cloud Run'
 on:
   pull_request:
     branches:
-      - '"main"'
+      - main
 
 env:
   PROJECT_ID: 'spry-sentry-430715-q8' #
