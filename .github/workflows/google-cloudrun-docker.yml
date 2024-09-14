@@ -1,13 +1,11 @@
 name: 'Build and Deploy to Cloud Run'
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
 env:
-  ACTIONS_RUNNER_DEBUG: true
-  ACTIONS_STEP_DEBUG: true
   PROJECT_ID: 'spry-sentry-430715-q8'
   REGION: 'us-central1'
   SERVICE: 'streamlit-app'
@@ -25,13 +23,15 @@ jobs:
       - name: 'Checkout'
         uses: 'actions/checkout@v4'
 
+      # Autenticação com o Google Cloud via Workload Identity Federation
       - id: 'auth'
-        name: 'Authenticate to Google Cloud'
+        name: 'Autenticar no Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
           service_account: 'github-actions@spry-sentry-430715-q8.iam.gserviceaccount.com'
 
+      # Autenticação no Docker Artifact Registry com o token OAuth
       - name: 'Docker Auth'
         uses: 'docker/login-action@v2'
         with:
@@ -39,12 +39,14 @@ jobs:
           password: '${{ steps.auth.outputs.access_token }}'
           registry: 'us-central1-docker.pkg.dev'
 
+      # Build e push da imagem Docker
       - name: 'Build and Push Container'
         run: |
           DOCKER_TAG="us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
           docker build --tag "${DOCKER_TAG}" .
           docker push "${DOCKER_TAG}"
 
+      # Deploy para o Cloud Run
       - name: 'Deploy to Cloud Run'
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
@@ -52,5 +54,6 @@ jobs:
           region: '${{ env.REGION }}'
           image: '${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}'
 
-      - name: 'Show output'
+      # Mostrar a URL do Cloud Run
+      - name: 'Exibir URL do Cloud Run'
         run: echo ${{ steps.deploy.outputs.url }}
