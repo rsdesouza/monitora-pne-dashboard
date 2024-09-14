@@ -9,7 +9,6 @@ env:
   PROJECT_ID: 'spry-sentry-430715-q8'
   REGION: 'us-central1'
   SERVICE: 'streamlit-app'
-  WORKLOAD_IDENTITY_PROVIDER: 'projects/386059856247/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
 
 jobs:
   deploy:
@@ -22,13 +21,6 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v4'
-
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
-          service_account: 'github-actions@spry-sentry-430715-q8.iam.gserviceaccount.com'
 
       - name: 'Set up Cloud SDK'
         uses: google-github-actions/setup-gcloud@v1
