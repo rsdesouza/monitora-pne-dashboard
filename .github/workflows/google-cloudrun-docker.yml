@@ -31,10 +31,9 @@ jobs:
       # including authenticating via a JSON credentials file.
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@f112390a2df9932162083945e46d439060d66ec2' # google-github-actions/auth@v2
         with:
           workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
-          service_account: 'github-actions@spry-sentry-430715-q8.iam.gserviceaccount.com'
 
       # BEGIN - Docker auth and build
       #
