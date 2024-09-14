@@ -28,7 +28,7 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
-      - name: 'Configure Docker for Google Artifact Registry'
+      - name: 'Authenticate Docker to Artifact Registry'
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
