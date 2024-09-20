@@ -31,7 +31,7 @@ jobs:
 
       - name: 'Authenticate Docker to Artifact Registry'
         run: |
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+          gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and Push Container
         run: |-
