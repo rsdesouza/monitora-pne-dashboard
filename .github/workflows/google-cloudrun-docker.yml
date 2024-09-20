@@ -30,11 +30,11 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: 'Authenticate Docker to Artifact Registry'
-        run: |- 
-          docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev
+        run: |-
+          gcloud auth login --no-launch-browser
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
-      - name: Build and Push Container
+      - name: 'Build and Push Container'
         run: |-
           docker build -t "us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
