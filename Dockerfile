@@ -1,16 +1,18 @@
-# Use uma imagem oficial do Python como base
+# Etapa 1: Imagem base com Python
 FROM python:3.9-slim
 
-# Define o diretório de trabalho
+# Etapa 2: Definir diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copia os arquivos necessários para a pasta de trabalho
-COPY requirements.txt .
-COPY app/estrategias.csv .
-COPY app/main.py .
-
-# Instala as dependências da aplicação
+# Etapa 3: Copiar o requirements.txt e instalar as dependências
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Executa a aplicação Streamlit
-CMD ["streamlit", "run", "main.py", "--server.port=8502", "--server.enableCORS=false"]
+# Etapa 4: Copiar o código da aplicação para o diretório de trabalho
+COPY . .
+
+# Etapa 5: Expor a porta onde o Streamlit será executado
+EXPOSE 8501
+
+# Etapa 6: Comando para rodar a aplicação
+CMD ["streamlit", "run", "app/main.py", "--server.port=8501", "--server.address=0.0.0.0"]
