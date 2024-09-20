@@ -13,4 +13,4 @@ COPY app/main.py .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Executa a aplicação Streamlit
-CMD ["streamlit", "run", "main.py", "--server.port=8080", "--server.enableCORS=false"]
+CMD ["streamlit", "run", "main.py", "--server.port=8502", "--server.enableCORS=false"]
