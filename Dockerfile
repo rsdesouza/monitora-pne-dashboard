@@ -1,5 +1,5 @@
-# Etapa 1: Imagem base com Python
-FROM python:3.9-slim
+# Etapa 1: Usar a imagem base Python mais recente (3.10)
+FROM python:3.10-slim
 
 # Etapa 2: Definir diretório de trabalho dentro do contêiner
 WORKDIR /app
