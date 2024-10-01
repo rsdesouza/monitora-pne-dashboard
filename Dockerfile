@@ -14,5 +14,8 @@ COPY . .
 # Expose port 8080 for GCP
 EXPOSE 8080
 
-# Run Streamlit on port 8080 (Cloud Run expects this)
-CMD streamlit run app.py --server.port 8080 --server.enableCORS false
+# Set the default port to Cloud Run's PORT environment variable
+ENV PORT 8080
+
+# Run Streamlit using the PORT environment variable
+CMD streamlit run app.py --server.port $PORT --server.enableCORS false --server.headless true
