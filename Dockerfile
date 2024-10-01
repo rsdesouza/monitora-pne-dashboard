@@ -1,8 +1,14 @@
 # Use the official Python image
-FROM python:3.10
+FROM python:3.12
 
 # Set working directory
 WORKDIR /app
+
+# Install system dependencies needed for numpy and other packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gfortran \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file and install dependencies
 COPY requirements.txt .
@@ -17,5 +23,5 @@ EXPOSE 8080
 # Set the default port to Cloud Run's PORT environment variable
 ENV PORT 8080
 
-# Etapa 6: Comando para rodar a aplicação, usando a variável de ambiente PORT definida pelo Cloud Run
+# Run the application using the PORT environment variable
 CMD ["streamlit", "run", "app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
