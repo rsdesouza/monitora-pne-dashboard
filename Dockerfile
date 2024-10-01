@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the requirements file and install dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire app
 COPY . .
@@ -17,5 +17,5 @@ EXPOSE 8080
 # Set the default port to Cloud Run's PORT environment variable
 ENV PORT 8080
 
-# Run Streamlit using the PORT environment variable
-CMD streamlit run app.py --server.port $PORT --server.enableCORS false --server.headless true
+# Run the Flask application using the PORT environment variable
+CMD ["python", "app.py"]
