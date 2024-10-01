@@ -4,14 +4,18 @@ FROM python:3.12
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies needed for numpy and other packages
+# Atualizar e instalar pacotes necessários
 RUN apt-get update && apt-get install -y \
+    python3-setuptools \
+    python3-wheel \
     build-essential \
     gfortran \
-    python3-distutils \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file and install dependencies
+# Instalar setuptools manualmente (para garantir)
+RUN pip install --upgrade pip setuptools wheel
+
+# Copiar o arquivo requirements.txt e instalar dependências
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
