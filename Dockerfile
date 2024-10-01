@@ -1,11 +1,19 @@
-# Etapa 1: Usar a imagem base completa do Python
 FROM python:3.10
 
-# Etapa 2: Definir diretório de trabalho dentro do contêiner
-WORKDIR /app
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    gfortran \
+    libatlas-base-dev \
+    libblas-dev \
+    liblapack-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Etapa 3: Copiar o requirements.txt e instalar as dependências Python
-COPY requirements.txt ./
+# Atualizar o pip
+RUN pip install --upgrade pip
+
+# Instalar as dependências Python
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Etapa 4: Copiar o código da aplicação para o diretório de trabalho
