@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Etapa 5: Expor a porta onde o Streamlit será executado
-EXPOSE 8080
+ENV PORT 8080
 
-# Etapa 6: Comando para rodar a aplicação, usando a variável de ambiente PORT definida pelo Cloud Run
-CMD ["streamlit", "run", "app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
+# No comando de execução da aplicação (streamlit run), certifique-se de incluir a porta 8080
+CMD streamlit run app.py --server.port $PORT --server.headless true
