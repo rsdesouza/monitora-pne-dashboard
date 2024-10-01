@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     libatlas-base-dev \
     liblapack-dev \
     libblas-dev \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
 # Etapa 3: Definir diretório de trabalho dentro do contêiner
