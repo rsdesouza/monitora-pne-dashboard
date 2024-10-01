@@ -17,5 +17,5 @@ EXPOSE 8080
 # Set the default port to Cloud Run's PORT environment variable
 ENV PORT 8080
 
-# Run the Flask application using the PORT environment variable
-CMD ["python", "app.py"]
+# Etapa 6: Comando para rodar a aplicação, usando a variável de ambiente PORT definida pelo Cloud Run
+CMD ["streamlit", "run", "app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
