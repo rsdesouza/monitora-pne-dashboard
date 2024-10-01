@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Etapa 5: Expor a porta onde o Streamlit será executado
-ENV PORT 8080
+ENV PORT 8502
 
 # No comando de execução da aplicação (streamlit run), certifique-se de incluir a porta 8080
 CMD streamlit run app.py --server.port $PORT --server.headless true
