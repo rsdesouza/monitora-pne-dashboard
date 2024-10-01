@@ -23,11 +23,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar o app
 COPY . .
 
-# Expor a porta 8080 para o GCP
-EXPOSE 8080
-
-# Definir a variável de ambiente PORT usada pelo Cloud Run
-ENV PORT 8080
+# Expor a porta 8501 para o GCP
+EXPOSE 8501
 
 # Comando para rodar a aplicação usando o Streamlit
-CMD ["streamlit", "run", "app.py", "--server.port", "$PORT", "--server.address", "0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
