@@ -1,26 +1,18 @@
-FROM python:3.10
+# Use the official Python image
+FROM python:3.9-slim
 
-# Instalar dependências do sistema
-RUN apt-get update && apt-get install -y \
-    gfortran \
-    libatlas-base-dev \
-    libblas-dev \
-    liblapack-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /app
 
-# Atualizar o pip
-RUN pip install --upgrade pip
-
-# Instalar as dependências Python
+# Copy the requirements file and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Etapa 4: Copiar o código da aplicação para o diretório de trabalho
+# Copy the entire app
 COPY . .
 
-# Etapa 5: Expor a porta onde o Streamlit será executado
-ENV PORT 8502
+# Expose port 8080 for GCP
+EXPOSE 8080
 
-# No comando de execução da aplicação (streamlit run), certifique-se de incluir a porta 8080
-CMD streamlit run app.py --server.port $PORT --server.headless true
+# Run Streamlit on port 8080 (Cloud Run expects this)
+CMD streamlit run app.py --server.port 8080 --server.enableCORS false
