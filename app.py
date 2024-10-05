@@ -28,17 +28,17 @@ def main():
     st.markdown(multi)
 
     # Criar o gráfico
-    fig = px.line(selected_columns, x='mes', y='valor', color='nomeEstrategia', title='Estrategia 2')
-    st.plotly_chart(fig)
+    fig = px.line(selected_columns, x='mes', y='valor', color='nomeEstrategia', title='Estratégia 2')
+    st.plotly_chart(fig, key='main_chart')
 
-    # Exibir os gráficos em colunas
+    # Exibir os gráficos em colunas com chaves únicas
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, key='col1_chart')
     with col2:
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, key='col2_chart')
     with col3:
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, key='col3_chart')
 
     # Outros indicadores
     st.markdown('''**INDICADOR 15B** - Proporção de docências dos anos iniciais do ensino fundamental com professores cuja formação superior está adequada à área de conhecimento que lecionam.''')
