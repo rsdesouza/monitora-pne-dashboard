@@ -1,6 +1,8 @@
+# app.py
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from st_files_connection import FilesConnection
 
 def main():
     # Configurar o layout da página
@@ -8,8 +10,11 @@ def main():
 
     st.title("Acompanhamento de estratégias")
 
-    # Carregar o dataset
-    df = pd.read_csv("estrategias.csv", sep=";", decimal=",")
+    # Conectar ao GCS e ler o arquivo CSV
+    conn = st.connection('gcs', type=FilesConnection)
+
+    # Especificar o caminho do arquivo no bucket do GCS
+    df = conn.read("monitora_pne_15_streamlit/estrategias.csv", input_format="csv", ttl=600, sep=";", decimal=",")
 
     # Filtrar os dados para a estratégia 'cadastro de professores'
     consulta = df.loc[df['nomeEstrategia'] == 'cadastro de professores']
