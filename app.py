@@ -6,16 +6,11 @@ def main():
     # Configurar o layout da página
     st.set_page_config(layout="wide")
 
-    st.title("Acompanhamento de Estratégias - Meta 15 do PNE")
-
     # Conectar ao Google Cloud Storage (GCS) e ler o arquivo CSV
     conn = st.connection('gcs', type=FilesConnection)
 
     # Especificar o caminho do arquivo no bucket do GCS
     df = conn.read("monitora_pne_15_streamlit/estrategias.csv", input_format="csv", ttl=600, sep=";", decimal=",")
-
-    # Exibir os gráficos e indicadores
-    st.markdown("## Gráficos de acompanhamento das estratégias aplicadas aos indicadores da meta 15 do PNE.")
 
     # Gráfico para Indicador 15A
     multi_15A = '''**INDICADOR 15A** - Proporção de docências da educação infantil com professores cuja formação superior está adequada à área de conhecimento que lecionam.'''
