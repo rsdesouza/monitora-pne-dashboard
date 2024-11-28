@@ -12,18 +12,6 @@ def main():
     # Especificar o caminho do arquivo no bucket do GCS
     df = conn.read("monitora_pne_15_streamlit/estrategias.csv", input_format="csv", ttl=600, sep=";", decimal=",")
 
-    # Converter valores e meses para garantir ordenação correta
-    df["mes"] = pd.Categorical(
-        df["mes"],
-        categories=["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"],
-        ordered=True
-    )
-    df = df.sort_values(["indicador", "mes"])
-
-    # Calcular o total por indicador e o percentual acumulado por mês
-    df["total_por_indicador"] = df.groupby("indicador")["valor"].transform("sum")
-    df["percentual"] = (df["valor"] / df["total_por_indicador"]) * 100
-
     # Agrupar os dados por indicador
     grouped = df.groupby("indicador")
 
@@ -38,18 +26,6 @@ def main():
 
         # Obter estratégias únicas dentro do indicador
         estrategias = data["nomeEstrategia"].unique()
-
-        # Gráfico percentual acumulado
-        grafico_percentual = px.line(
-            data,
-            x="mes",
-            y="percentual",
-            color="nomeEstrategia",
-            title=f"Percentual de Progresso - Indicador {indicador}",
-            markers=True
-        )
-        with st.expander(f"Gráfico Percentual do {indicador}", expanded=True):
-            st.plotly_chart(grafico_percentual, use_container_width=True)
 
         # Gerar gráficos para cada estratégia
         for i, estrategia in enumerate(estrategias):
