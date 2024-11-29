@@ -43,7 +43,8 @@ def main():
                 title=f"Estratégia: {estrategia}",
                 markers=True,
                 labels={"mes": "Mês", "valor": "Valor"},
-                color="ano"
+                color="ano",
+                line_shape="spline"  # Suavizar as linhas
             )
             grafico.update_xaxes(categoryorder="array", categoryarray=["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"])
 
@@ -69,4 +70,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
